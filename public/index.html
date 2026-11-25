@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0a0a0c" />
+  <title>OHMusic</title>
+  <link rel="icon" id="favicon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="logo" href="#/">
+        <span class="logo-mark coin-spin" data-ic="coin"></span>
+        <span class="logo-text">OH<b>MUSIC</b></span>
+      </a>
+      <div class="side-tag">- MENU -</div>
+      <nav class="nav">
+        <a href="#/" class="nav-link" data-route="home"><i data-ic="home"></i>Home</a>
+        <a href="#/search" class="nav-link" data-route="search"><i data-ic="search"></i>Search</a>
+        <a href="#/browse" class="nav-link" data-route="browse"><i data-ic="browse"></i>Browse</a>
+        <a href="#/albums" class="nav-link" data-route="albums"><i data-ic="disc"></i>Albums</a>
+      </nav>
+      <div class="lib-head">
+        <a href="#/library" class="nav-link" data-route="library"><i data-ic="library"></i>Your Library</a>
+        <button class="icon-btn" id="new-pl" title="Create playlist" data-ic="plus"></button>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="topbar">
+        <div class="nav-btns">
+          <button class="icon-btn round" id="go-back" data-ic="back" title="Back"></button>
+          <button class="icon-btn round" id="go-fwd" data-ic="forward" title="Forward"></button>
+        </div>
+        <form id="search-form" autocomplete="off">
+          <span class="s-ic" data-ic="search"></span>
+          <input id="q" type="text" placeholder="SEARCH OR PASTE YT PLAYLIST LINK" spellcheck="false" />
+        </form>
+        <div class="hud" title="Earn +1 coin for every NEW song you play, 10 coins = level up! (C = toggle CRT)">
+          <span class="hud-coin" data-ic="coin" data-s="22"></span>
+          <span class="hud-num">x<span id="coins">0000</span></span>
+          <span class="hud-lv">LV<span id="lv">01</span></span>
+          <span class="xp"><i id="xp"></i></span>
+        </div>
+      </header>
+      <div id="view"></div>
+    </main>
+
+    <footer class="player" id="player">
+      <div class="np">
+        <button class="np-cover" id="np-cover-btn" title="Open Now Playing"><img id="np-cover" alt="" /></button>
+        <div class="np-text">
+          <div class="np-label" id="np-label">INSERT COIN</div>
+          <div id="np-title">Nothing playing</div>
+          <a id="np-artist" href="#/">Pick a song to start</a>
+        </div>
+        <button id="np-like" class="icon-btn" data-ic="heart" title="Like"></button>
+      </div>
+      <div class="center">
+        <div class="controls">
+          <button id="btn-shuffle" class="icon-btn" data-ic="shuffle" title="Shuffle"></button>
+          <button id="btn-prev" class="icon-btn" data-ic="prev" title="Previous"></button>
+          <button id="btn-play" class="play" data-ic="play" title="Play / Pause (Space)"></button>
+          <button id="btn-next" class="icon-btn" data-ic="next" title="Next"></button>
+          <button id="btn-repeat" class="icon-btn" data-ic="repeat" title="Repeat"></button>
+        </div>
+        <div class="seek">
+          <span id="t-cur">0:00</span>
+          <input id="seek" type="range" min="0" max="1000" value="0" />
+          <span id="t-dur">0:00</span>
+        </div>
+      </div>
+      <div class="right">
+        <span id="status"></span>
+        <button id="btn-lyrics" class="icon-btn" data-ic="mic" title="Lyrics"></button>
+        <button id="btn-queue" class="icon-btn" data-ic="queue" title="Queue"></button>
+        <button id="btn-mute" class="icon-btn" data-ic="volume" title="Mute"></button>
+        <input id="vol" type="range" min="0" max="100" value="80" />
+        <button id="btn-expand" class="icon-btn" data-ic="expand" title="Full screen player"></button>
+      </div>
+    </footer>
+
+    <nav class="mnav">
+      <a href="#/" data-route="home"><i data-ic="home" data-s="22"></i>Home</a>
+      <a href="#/search" data-route="search"><i data-ic="search" data-s="22"></i>Search</a>
+      <a href="#/browse" data-route="browse"><i data-ic="browse" data-s="22"></i>Browse</a>
+      <a href="#/albums" data-route="albums"><i data-ic="disc" data-s="22"></i>Albums</a>
+      <a href="#/library" data-route="library"><i data-ic="library" data-s="22"></i>Library</a>
+    </nav>
+
+    <section class="fs" id="fs" hidden>
+      <div class="fs-bg" id="fs-bg"></div>
+      <button class="icon-btn round fs-close" id="fs-close" data-ic="down" title="Close (Esc)"></button>
+      <div class="fs-body">
+        <div class="fs-left">
+          <div class="fs-label">NOW PLAYING</div>
+          <img id="fs-cover" alt="" />
+          <div class="fs-meta">
+            <div id="fs-title"></div>
+            <a id="fs-artist" href="#/"></a>
+          </div>
+          <canvas id="viz" width="640" height="120"></canvas>
+        </div>
+        <div class="fs-right" id="lyrics"></div>
+      </div>
+    </section>
+
+    <div class="queue" id="queue" hidden>
+      <div class="q-head"><h3>Queue</h3><button class="btn ghost sm" id="q-clear">Clear</button></div>
+      <div id="queue-list"></div>
+    </div>
+  </div>
+
+  <div id="menu" class="menu" hidden></div>
+  <div id="modal" class="modal" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+  <audio id="audio" preload="auto"></audio>
+  <script src="app.js"></script>
+</body>
+</html>
